@@ -1,23 +1,22 @@
-import { useState, type ReactNode } from "react";
 import FoodCard from "./FoodCard"
 import fooddata from "./fooddata.json"
 import TailButton from "../ui/TailButton";
-import type { foodItem } from "../types/food";
+import type { FoodItem } from "../types/food";
+import { useState, type ReactNode } from "react";
 
 export default function FoodMain() {
 
-    const [tag, setTag] = useState<ReactNode[]>([]) //state변수는 const로 선언하기
+    const [tag, setTag] = useState<ReactNode[]>([]) //만든 태그이므로 ReactNode 사용하기**
 
-    let group = fooddata.map(item=> item["운영주체 분류"].replaceAll(' ',""));
-    group = [...new Set(group)]; //중복제거하기 위해 set , map하기 위해 배열로 만들기
-    //console.log(group);
-   
+    let group:string[] = fooddata.map(item=> item["운영주체 분류"].replaceAll(' ',"")); //운영주체만 뽑아낸 string 배열
+    group = [...new Set(group)];
 
     const handleClick = (gubun:string) => {
       //console.log(gubun)
-      let choose:foodItem[] = fooddata.filter((item) => item["운영주체 분류"].replaceAll(' ',"") == gubun)
-      let chooseTag:ReactNode[] = choose.map(item => <FoodCard key = {item.사업장명}
-                                                               item = {item}/> )                 
+      let choose:FoodItem[] = fooddata.filter((item) => item["운영주체 분류"].replaceAll(' ',"") == gubun) //filter 거치면서 foodItem 배열이 뽑아내짐
+      let chooseTag:ReactNode[] = choose.map(item =>  //만든 태그이므로 ReactNode 사용하기**
+                                      <FoodCard key = {item.사업장명} 
+                                                item = {item}/> )                 
       setTag(chooseTag)
     }
 

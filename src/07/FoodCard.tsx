@@ -2,15 +2,15 @@ import bankImg from "../assets/bank.png"
 import busanImg from "../assets/busan.png"
 import marketImg from "../assets/market.png"
 import { useState } from "react"
-import type { foodItem } from "../types/food"
+import type { FoodItem } from "../types/food"
 
 interface FoodCardProps{
-    item:foodItem //card 하나는 foodItem 하나임 -> Main에서 map을 돌려서 여러개 만듦
+    item:FoodItem //card 하나는 foodItem 하나임 -> Main에서 map을 돌려서 여러개 만듦
 }
 
 export default function FoodCard({item}:FoodCardProps) {
 
-    const [Flag, setFlag] = useState(false); 
+    const [Flag, setFlag] = useState<boolean>(false); 
     const handleToggle = () =>{
         setFlag(!Flag); //클릭시 플래그를 바꿈
     }

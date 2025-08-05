@@ -1,4 +1,4 @@
-export interface foodItem{
+export interface FoodItem{
     "구분":string,
     "시군구":string,
     "사업장명":string,
