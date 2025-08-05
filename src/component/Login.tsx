@@ -4,8 +4,8 @@ import { useAtom } from "jotai";
 import type { MouseEvent } from "react";
 
 export default function Login() {
-    const emailRef = useRef<HTMLInputElement>(null); //폼에서 작성되는 값을 가져올 수 있음
-    const pwRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null); //<input>에 작성되는 값 가져오기
+    const pwRef = useRef<HTMLInputElement>(null); //<input>에 작성되는 값 가져오기
 
     const [ ,setLogin] = useAtom(isLogin); //로그인버튼을 눌렀을 때 사용할 예정 //안쓰는 변수는 지워도 됨(쉼표는 사용하기!)
 

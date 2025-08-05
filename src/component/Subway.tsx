@@ -4,8 +4,8 @@ import SubwayBox from './SubwayBox';
 import { useRef, useState } from 'react'
 
 export interface TdataItem {
-    //[key:string]:string //데이터가 어떤 형태로 들어와 있는지 모를 때 -> 이렇게 사용
-    //키가 정해져있을 때 -> 명시적으로 사용하는 게 더 좋음
+    //[key:string]:string //데이터가 어떤 형태인지 모를 때 -> 이렇게 사용
+    //데이터의 형태를 알 때 (키가 정해져있을 때) -> 키와 그에 해당하는 값의 타입을 명시적으로 사용하는 게 더 좋음
     "areaIndex":string
     "city":string
     "co":string
@@ -23,11 +23,10 @@ export interface TdataItem {
 }
 
 export default function Subway() {
-  
-    const [tdata, setTdata] = useState<TdataItem[]>([]); //전체 데이터
-    const sRef = useRef<HTMLSelectElement>(null); //변경(선택)할 부분
-    const sareaCode:string[] = sarea.map(item=>item["코드"])
-    const sareaArea:string[] = sarea.map(item=>item["측정소"])
+    const [tdata, setTdata] = useState<TdataItem[]>([]); //전체 데이터 -> TdataItem 타입의 "배열"이 들어옴
+    const sRef = useRef<HTMLSelectElement>(null); //<select>에서 선택한 부분을 가져옴
+    const sareaCode:string[] = sarea.map(item=>item["코드"]) //sarea에서 "코드"라는 키값에 해당하는 값만 가져옴 -> string 배열
+    const sareaArea:string[] = sarea.map(item=>item["측정소"]) //sarea에서 "측정소"라는 키값에 해당하는 값만 가져옴 -> string 배열
 
     //데이터 패치하기 
     const getFetchData = async() =>{
@@ -36,13 +35,13 @@ export default function Subway() {
 
         const baseUrl = 'https://apis.data.go.kr/6260000/IndoorAirQuality/getIndoorAirQualityByStation?'
         let url = `${baseUrl}serviceKey=${import.meta.env.VITE_DATA_API}&pageNo=1&numOfRows=24&resultType=json&controlnumber=${today}&areaIndex=${sRef.current?.value}`;
-        //console.log(url) //url이 제대로 만들어졌는지 확인
 
         const resp = await fetch(url); 
         const data = await resp.json(); 
         const items = data.response.body.items.item;
-        const sortedData = items.slice().sort((a:TdataItem, b:TdataItem) => { // 'controlnumber'를 기준으로 시간순(오름차순)으로 정렬
-            return a.controlnumber.localeCompare(b.controlnumber); // 문자열 정렬 localeCompare 사용
+        console.log(items)
+        const sortedData = items.slice().sort((a:TdataItem, b:TdataItem) => { // slice()는 배열을 반환 //sort()
+            return a.controlnumber.localeCompare(b.controlnumber); // 문자열 정렬 -> localeCompare 사용
             //localeCompare() 메서드 : 참조 문자열이 정렬 순으로 지정된 문자열 앞 혹은 뒤에 오는지 또는 동일한 문자열인지 나타내는 수치를 반환
         });
         // 정렬된 데이터로 상태 업데이트

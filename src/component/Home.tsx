@@ -3,7 +3,7 @@ import { isLogin } from "../atoms/IsLoginAtom"
 import Login from "./Login"
 
 export default function Home() {
-    const [login, setLogin] = useAtom(isLogin);
+    const [login,] = useAtom(isLogin);
     const email = localStorage.getItem("email");
     
   return (
