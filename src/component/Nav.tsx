@@ -49,6 +49,11 @@ export default function Nav() {
                 Lotto
               </li>
             </Link>
+            <Link to = "/food">
+              <li className='px-2 hover:bg-indigo-500 hover:rounded-3xl hover:text-indigo-50 p-2'>
+                Food
+              </li>
+            </Link>
             </ul>
         </div>
         {/* //로그아웃 상태일때만 이 div 태그를 클릭하면 로그인 페이지로 이동 */}

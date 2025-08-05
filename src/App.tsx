@@ -7,6 +7,7 @@ import Subway from './component/Subway'
 import TodoList from './component/TodoList'
 import MyClock from './02/MyClock'
 import Lotto from './05/Lotto'
+import FoodMain from './07/FoodMain'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path = "/todo" element={<TodoList/>} />
             <Route path = "/clock" element={<MyClock/>} />
             <Route path = "/lotto" element={<Lotto/>} />
+            <Route path = "/food" element={<FoodMain/>} />
           </Routes>
         </main>
         <footer className="w-full min-h-20 bg-black text-white flex justify-center items-center">
