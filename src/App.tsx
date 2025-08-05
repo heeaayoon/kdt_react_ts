@@ -5,6 +5,8 @@ import Home from './component/Home'
 import Login from './component/Login'
 import Subway from './component/Subway'
 import TodoList from './component/TodoList'
+import MyClock from './02/MyClock'
+import Lotto from './05/Lotto'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path = "/login" element={<Login/>} />
             <Route path = "/subway" element={<Subway/>} />
             <Route path = "/todo" element={<TodoList/>} />
+            <Route path = "/clock" element={<MyClock/>} />
+            <Route path = "/lotto" element={<Lotto/>} />
           </Routes>
         </main>
         <footer className="w-full min-h-20 bg-black text-white flex justify-center items-center">
