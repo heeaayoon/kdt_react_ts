@@ -1,11 +1,11 @@
 import TailButton from "../ui/TailButton"
-import { useEffect, useRef, useState } from "react";
-import type { Todo, completedT } from "../types/Todo";
+import { useEffect, useRef } from "react";
+import type { completedT } from "../types/Todo";
 
 import type { MouseEvent } from "react";
 
 interface TodoFormProps{
-  addTodo:(text:string,completed:completedT)=>void
+  addTodo:(text:string,completed:completedT)=>void //함수
 }
 
 export default function TodoForm({addTodo}:TodoFormProps) {
@@ -13,21 +13,25 @@ export default function TodoForm({addTodo}:TodoFormProps) {
     const tRef = useRef<HTMLInputElement>(null); //가져올 부분 : input
 
     
-    const handleInput=(e:MouseEvent<HTMLButtonElement>)=>{
+    const handleInput=(e:MouseEvent<HTMLButtonElement>)=>{ //<botton>에서 발생하는 클릭 이벤트
         e.preventDefault() ;
-        if(tRef.current?.value == ""){ //값이 없는 경우에는 경고창 띄우기
+        if(!tRef.current||!cRef.current) return; //tRef나 cRef가 null일 경우를 미리 처리하기
+
+        if(tRef.current.value == ""){
             alert("할 일을 입력하세요");
             tRef.current.focus();
             return;
         }    
-        addTodo(tRef.current?.value, cRef.current?.value)
+        addTodo(tRef.current.value, cRef.current.value as completedT) //cRef.current.value면 어떤 string이든 다 들어올 수 있음 -> "O"나 "X"만 들어올 수 있도록 명시
         handleCancel();
     }
         
    const handleCancel=()=>{
-        tRef.current?.value==""
-        tRef.current?.focus();
-        cRef.current?.value=="X"
+    if(tRef.current){ //tRef 값이 있을 때만
+        tRef.current.value=="" ;
+        tRef.current.focus() ;
+    }
+    if(cRef.current) cRef.current.value=="X"; //cRef 값이 있을 때만
     }
 
     //맨 처음에 text작성하는 input 부분으로 커서 가도록

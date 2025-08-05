@@ -41,8 +41,9 @@ export default function Subway() {
         const resp = await fetch(url); 
         const data = await resp.json(); 
         const items = data.response.body.items.item;
-        const sortedData = items.slice().sort((a: { controlnumber: number; }, b: { controlnumber: number; }) => { // 'controlnumber'를 기준으로 시간순(오름차순)으로 정렬
-            return a.controlnumber - b.controlnumber;
+        const sortedData = items.slice().sort((a:TdataItem, b:TdataItem) => { // 'controlnumber'를 기준으로 시간순(오름차순)으로 정렬
+            return a.controlnumber.localeCompare(b.controlnumber); // 문자열 정렬 localeCompare 사용
+            //localeCompare() 메서드 : 참조 문자열이 정렬 순으로 지정된 문자열 앞 혹은 뒤에 오는지 또는 동일한 문자열인지 나타내는 수치를 반환
         });
         // 정렬된 데이터로 상태 업데이트
         setTdata(sortedData);

@@ -3,8 +3,8 @@ import type { Todo, completedT } from "../types/Todo";
 
 interface TodoItemProps{
   item:Todo,
-  onToggle:(id:string, completed:completedT)=>void,
-  onDelete:(id:string)=>void
+  onToggle:(id:string, completed:completedT)=>void, //함수
+  onDelete:(id:string)=>void //함수
 }
 
 export default function TodoItem({item, onDelete, onToggle}:TodoItemProps) {
