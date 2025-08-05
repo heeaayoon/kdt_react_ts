@@ -1,32 +1,38 @@
 import TailButton from "../ui/TailButton"
 import { useEffect, useRef, useState } from "react";
-//copy가 원본임
+import type { Todo, completedT } from "../types/Todo";
 
-export default function TodoForm({addTodo}) {
-    const cRef = useRef(); //변경(선택)할 부분 : select
-    const tRef = useRef(); //가져올 부분 : text
+import type { MouseEvent } from "react";
+
+interface TodoFormProps{
+  addTodo:(text:string,completed:completedT)=>void
+}
+
+export default function TodoForm({addTodo}:TodoFormProps) {
+    const cRef = useRef<HTMLSelectElement>(null); //변경(선택)할 부분 : select
+    const tRef = useRef<HTMLInputElement>(null); //가져올 부분 : input
 
     
-    const handleInput= (e)=>{
+    const handleInput=(e:MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault() ;
-        if(tRef.current.value == ""){ //값이 없는 경우에는 경고창 띄우기
+        if(tRef.current?.value == ""){ //값이 없는 경우에는 경고창 띄우기
             alert("할 일을 입력하세요");
             tRef.current.focus();
             return;
         }    
-        addTodo(tRef.current.value, cRef.current.value)
+        addTodo(tRef.current?.value, cRef.current?.value)
         handleCancel();
     }
         
    const handleCancel=()=>{
-        tRef.current.value==""
-        tRef.current.focus();
-        cRef.current.value=="X"
+        tRef.current?.value==""
+        tRef.current?.focus();
+        cRef.current?.value=="X"
     }
 
     //맨 처음에 text작성하는 input 부분으로 커서 가도록
     useEffect(()=>{
-       tRef.current.focus();
+       tRef.current?.focus();
     },[])    
     
   return (

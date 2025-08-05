@@ -3,26 +3,45 @@ import TailSelect from '../ui/TailSelect';
 import SubwayBox from './SubwayBox';
 import { useRef, useState } from 'react'
 
+export interface TdataItem {
+    //[key:string]:string //데이터가 어떤 형태로 들어와 있는지 모를 때 -> 이렇게 사용
+    //키가 정해져있을 때 -> 명시적으로 사용하는 게 더 좋음
+    "areaIndex":string
+    "city":string
+    "co":string
+    "co2":string
+    "controlnumber":string
+    "fad":string
+    "no":string
+    "no2":string
+    "nox":string
+    "o3":string
+    "office":string
+    "pm10":string
+    "pm25":string 
+    "site":string
+}
+
 export default function Subway() {
   
-    const [tdata, setTdata] = useState([]); //전체 데이터
+    const [tdata, setTdata] = useState<TdataItem[]>([]); //전체 데이터
     const sRef = useRef<HTMLSelectElement>(null); //변경(선택)할 부분
-    const sareaCode = sarea.map(item=>item["코드"]) //원래의 <TailSelect> 를 쓰기 위해
-    const sareaArea = sarea.map(item=>item["측정소"])
+    const sareaCode:string[] = sarea.map(item=>item["코드"])
+    const sareaArea:string[] = sarea.map(item=>item["측정소"])
 
     //데이터 패치하기 
-    const getFetchData = async()=>{
+    const getFetchData = async() =>{
         //날짜를 YYYYMMDD 형식으로 받아오기
-        const today = new Date().toISOString().slice(0,10).replaceAll("-",""); //오늘 날짜
+        const today:string = new Date().toISOString().slice(0,10).replaceAll("-",""); //오늘 날짜
 
         const baseUrl = 'https://apis.data.go.kr/6260000/IndoorAirQuality/getIndoorAirQualityByStation?'
-        let url = `${baseUrl}serviceKey=${import.meta.env.VITE_DATA_API}&pageNo=1&numOfRows=12&resultType=json&controlnumber=${today}&areaIndex=${sRef.current.value}`; //시간대별로 24개 데이터가 나옴 -> numOfRows=24 로 수정해서 데이터 받아오기
+        let url = `${baseUrl}serviceKey=${import.meta.env.VITE_DATA_API}&pageNo=1&numOfRows=24&resultType=json&controlnumber=${today}&areaIndex=${sRef.current?.value}`;
         //console.log(url) //url이 제대로 만들어졌는지 확인
 
         const resp = await fetch(url); 
         const data = await resp.json(); 
         const items = data.response.body.items.item;
-        const sortedData = items.slice().sort((a, b) => { // 'controlnumber'를 기준으로 시간순(오름차순)으로 정렬
+        const sortedData = items.slice().sort((a: { controlnumber: number; }, b: { controlnumber: number; }) => { // 'controlnumber'를 기준으로 시간순(오름차순)으로 정렬
             return a.controlnumber - b.controlnumber;
         });
         // 정렬된 데이터로 상태 업데이트
@@ -46,9 +65,8 @@ export default function Subway() {
                     opt = {sareaArea} />
       </div>
       <div className='w-full flex flex-col mt-10 gap-4'>
-        {tdata.map((item,idx) => <SubwayBox key={item.controlnumber}
-                                            idx = {idx}
-                                            item = {item} />)}
+        {tdata.map((item:TdataItem) => <SubwayBox key={item.controlnumber}          
+                                                  item = {item} />)}
       </div>
     </div>
   )

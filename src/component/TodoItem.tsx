@@ -1,6 +1,13 @@
 import TailButton from "../ui/TailButton"
+import type { Todo, completedT } from "../types/Todo";
 
-export default function TodoItem({item, onDelete, onToggle}) {
+interface TodoItemProps{
+  item:Todo,
+  onToggle:(id:string, completed:completedT)=>void,
+  onDelete:(id:string)=>void
+}
+
+export default function TodoItem({item, onDelete, onToggle}:TodoItemProps) {
 
   return (
     <div className='flex justify-between
