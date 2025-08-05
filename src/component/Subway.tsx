@@ -40,7 +40,7 @@ export default function Subway() {
         const data = await resp.json(); 
         const items = data.response.body.items.item;
         console.log(items)
-        const sortedData = items.slice().sort((a:TdataItem, b:TdataItem) => { // slice()는 배열을 반환 //sort()
+        const sortedData = items.slice().sort((a:TdataItem, b:TdataItem) => { // slice(): items를 얕은 복사한 배열을 반환 //sort():배열의 두 요소를 받아 비교하고, 정렬
             return a.controlnumber.localeCompare(b.controlnumber); // 문자열 정렬 -> localeCompare 사용
             //localeCompare() 메서드 : 참조 문자열이 정렬 순으로 지정된 문자열 앞 혹은 뒤에 오는지 또는 동일한 문자열인지 나타내는 수치를 반환
         });
